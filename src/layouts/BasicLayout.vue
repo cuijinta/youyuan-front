@@ -1,5 +1,4 @@
 <template>
-
   <van-nav-bar
       title="标题"
       right-text="按钮"
@@ -46,5 +45,9 @@ const onClickRight = () => {
   line-height: 150px;
   text-align: center;
   background-color: #39a9ed;
+}
+
+#content {
+  padding-bottom: 50px;
 }
 </style>

@@ -1,7 +1,7 @@
 import {createApp} from 'vue';
 import App from './App.vue';
 import 'vant/lib/index.css';
-import {Col, Icon, NavBar, Row, Tabbar, TabbarItem, TreeSelect} from "vant";
+import {Col, Icon, NavBar, Row, Tabbar, TabbarItem, Toast, TreeSelect} from "vant";
 import * as VueRouter from 'vue-router';
 import routes from "./config/route.ts";
 
@@ -14,6 +14,7 @@ app.use(TabbarItem);
 app.use(TreeSelect);
 app.use(Col);
 app.use(Row);
+app.use(Toast);
 
 
 //创建路由实例并传递 `routes` 配置

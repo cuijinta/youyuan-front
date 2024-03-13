@@ -2,14 +2,15 @@
   <form action="/">
     <van-search
         v-model="searchText"
+        shape="round"
+        background="#81c995"
         show-action
-        placeholder="请输入要搜索的标签"
+        placeholder="请输入想搜索的标签"
         @search="onSearch"
-        @cancel="onCancel"
-    />
+        @cancel="onCancel"/>
   </form>
-  <van-divider :style="{ color: '#1989fa', borderColor: '#1989fa', padding: '0 16px' }">已选标签</van-divider>
-  <div v-if="activeIds.length === 0">请选择标签</div>
+  <van-divider :style="{ color: '#81c995', borderColor: '#81c995', padding: '0 16px' }">已选标签</van-divider>
+  <div v-if="activeIds.length === 0">选择要搜索的标签</div>
   <van-row gutter="16">
     <van-col v-for="tag in activeIds">
       <van-tag closeable size="small" type="primary" @close="doClose(tag)">
@@ -17,18 +18,24 @@
       </van-tag>
     </van-col>
   </van-row>
-  <van-divider :style="{ color: '#fa2119', borderColor: '#fa2119', padding: '0 16px' }">
+  <van-divider :style="{ color: '#ee675c', borderColor: '#ee675c', padding: '0 16px' }">
     为你推荐
   </van-divider>
-  <van-tag :show="show" closeable size="medium" type="primary">
-    标签
+  <van-tag color="#996ac7" :show="activeIds.length === 0" closeable size="medium" type="primary">
+    标签列表
   </van-tag>
-
   <van-tree-select v-model:active-id="activeIds" v-model:main-active-index="activeIndex" :items="tagList"/>
+  <van-button round color="#81c995" size="large" loading-text="搜索中" type="success" @click="doSearchResult">搜有缘人
+  </van-button>
 </template>
 
 <script setup>
 import {ref} from 'vue';
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
+const searchText = ref('');
 
 const originTagList = [{
   text: '性别',
@@ -55,7 +62,8 @@ const originTagList = [{
 
 let tagList = ref(originTagList);
 
-const searchText = ref('');
+
+//标签列表
 const onSearch = (val) => {
   tagList.value = originTagList
       .map(parentTag => {
@@ -66,8 +74,9 @@ const onSearch = (val) => {
         return tempParentTag;
       });
 }
+//清空内容
 const onCancel = () => {
-  searchText.value = ''; //清空内容
+  searchText.value = '';
   activeIds.value = [];
   tagList.value = originTagList;
 };
@@ -75,13 +84,21 @@ const onCancel = () => {
 //已选中的标签
 const activeIds = ref([]);
 const activeIndex = ref(0);
-//标签列表
-
 
 // 移除标签
 const doClose = (tag) => {
   activeIds.value = activeIds.value.filter(item => {
     return item !== tag;
+  })
+}
+
+//执行搜索
+const doSearchResult = () => {
+  router.push({
+    path:'/user/list',
+    query:{
+      tags: activeIds.value
+    }
   })
 }
 </script>
