@@ -2,7 +2,7 @@
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
-import {showFailToast, showSuccessToast, Toast} from "vant";
+import {showFailToast, showSuccessToast} from "vant";
 import {getCurrentUser} from "../api/user.ts";
 import {getCurrentUserState} from "../states/user.ts";
 

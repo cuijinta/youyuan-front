@@ -1,7 +1,20 @@
 import {createApp} from 'vue';
 import App from './App.vue';
 import 'vant/lib/index.css';
-import {Col, Icon, NavBar, Row, Tabbar, TabbarItem, Toast, TreeSelect} from "vant";
+import {
+    CellGroup,
+    Col, DatetimePicker,
+    Field,
+    Icon,
+    NavBar, Picker,
+    Popup,
+    PullRefresh,
+    Row,
+    Tabbar,
+    TabbarItem,
+    Toast,
+    TreeSelect
+} from "vant";
 import * as VueRouter from 'vue-router';
 import routes from "./config/route.ts";
 
@@ -15,7 +28,12 @@ app.use(TreeSelect);
 app.use(Col);
 app.use(Row);
 app.use(Toast);
-
+app.use(PullRefresh);
+app.use(Field);
+app.use(CellGroup);
+app.use(Popup);
+app.use(Picker);
+// app.use(DatetimePicker);
 
 //创建路由实例并传递 `routes` 配置
 const router = VueRouter.createRouter({

@@ -1,6 +1,6 @@
 <template>
   <van-nav-bar
-      title="标题"
+      title="有缘人"
       right-text="按钮"
       left-arrow
       @click-left="onClickLeft"
