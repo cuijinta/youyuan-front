@@ -1,9 +1,10 @@
 import {createApp} from 'vue';
 import App from './App.vue';
 import 'vant/lib/index.css';
+import 'vant/es/toast/style';
 import {
     CellGroup,
-    Col, DatetimePicker,
+    Col,
     Field,
     Icon,
     NavBar, Picker,
@@ -33,6 +34,7 @@ app.use(Field);
 app.use(CellGroup);
 app.use(Popup);
 app.use(Picker);
+app.use(Toast);
 // app.use(DatetimePicker);
 
 //创建路由实例并传递 `routes` 配置
