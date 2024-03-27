@@ -1,6 +1,6 @@
 <template>
   <van-nav-bar
-      title="有缘人"
+      :title="title"
       right-text="按钮"
       left-arrow
       @click-left="onClickLeft"
@@ -22,9 +22,18 @@
 </template>
 
 <script setup>
+import {ref, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
+const title = ref('');
+const router = useRouter();
+const route = useRoute();
 
-import {useRouter} from "vue-router";
-const router = useRouter()
+watch(route, () => {
+  if (route.meta.title) {
+    console.log(route.meta.title)
+    title.value = route.meta.title;
+  }
+}, { immediate: true }); // immediate: true 表示立即执行一次 watch 函数
 //监听点击事件与路由冲突
 // const onChange = (index) => {
 //   Toast(`标签 ${index}`);
