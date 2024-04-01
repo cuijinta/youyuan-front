@@ -10,7 +10,7 @@ import {
     NavBar, Picker,
     Popup,
     PullRefresh,
-    Row,
+    Row, Switch,
     Tabbar,
     TabbarItem,
     Toast,
@@ -35,6 +35,7 @@ app.use(CellGroup);
 app.use(Popup);
 app.use(Picker);
 app.use(Toast);
+app.use(Switch);
 // app.use(DatetimePicker);
 
 //创建路由实例并传递 `routes` 配置

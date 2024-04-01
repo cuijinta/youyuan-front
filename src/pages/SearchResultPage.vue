@@ -1,5 +1,5 @@
 <template>
-  <user-card-list :user-list="userList"/>
+  <user-card-list :user-list="userList" :loading="loading"/>
   <van-empty v-if="!userList || userList.length < 1"
              image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVWsm8-OWBvS7sumNvb9APNobyW6J6A18ObQ&usqp=CAU"
              image-size="200"
@@ -19,6 +19,7 @@ import UserCardList from "../components/UserCardList.vue";
 const route = useRoute()
 const {tags} = route.query;
 const userList = ref([]);
+const loading = ref(false);
 
 onMounted(async () => {
   const userListData = await myAxios.get('/user/search/tags', {

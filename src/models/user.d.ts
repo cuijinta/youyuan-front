@@ -12,7 +12,7 @@ export type UserType = {
     userStatus: number;
     email: string;
     userRole: number;
-    tags: string[];
+    tags: string;
     code: string;
     profile: string;
 }
