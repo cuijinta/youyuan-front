@@ -1,57 +1,101 @@
-<template>
-  <van-form @submit="onSubmit">
-    <van-cell-group inset>
-      <van-field
-          v-model="userAccount"
-          name="userAccount"
-          label="账户"
-          placeholder="账户"
-          :rules="[{ required: true, message: '请填写账户' }]"
-      />
-      <van-field
-          v-model="userPassword"
-          type="password"
-          name="userPassword"
-          label="密码"
-          placeholder="密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
-      />
-    </van-cell-group>
-    <div style="margin: 16px;">
-      <van-button round block type="primary" native-type="submit">
-        提交
-      </van-button>
-    </div>
-  </van-form>
-</template>
-<script setup lang="ts">
+<script setup>
 
-import {useRouter} from "vue-router";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {showFailToast, showSuccessToast} from "vant";
 import myAxios from "../plugins/myAxios";
-import {showFailToast, showSuccessToast, Toast} from "vant";
+import currentUser from "../services/currentUser";
 
-const router = useRouter();
-
-const userAccount = ref('');
-const userPassword = ref('');
+const qqLogin = async () => {
+  window.location.href = await myAxios.get("login/qq")
+}
+const router = useRouter()
+const route = useRoute()
+const username = ref('');
+const password = ref('');
+const NOT_JUMP = ["/user/register", "/user/register"]
 
 const onSubmit = async () => {
-  const res = await myAxios.post('/user/login',{
-    userAccount: userAccount.value,
-    userPassword: userPassword.value,
+  const loginUser = await myAxios.post("/user/login", {
+    "userAccount": username.value,
+    "userPassword": password.value
   })
-  console.log(res,'用户登录');
-  if (res.code === 20000 && res.data){
-    showSuccessToast('登录成功');
-    router.replace('/') //这里使用replace替换掉之前的页面
-  } else {
-    showFailToast('登录失败');
-  }
+  if (loginUser?.code === 20000) {
+    sessionStorage.setItem("longUser", loginUser ? JSON.stringify(loginUser) : undefined)
+    showSuccessToast('登录成功')
+    await router.push("/");
+  }else {
+      showFailToast(`\`${loginUser.description}\``)
+  }S
 };
 
+// onMounted(async () => {
+//   const loginUser = await currentUser()
+//   if (loginUser) {
+//     await router.push(jumpPath)
+//   }
+// })
 </script>
+<template>
+  <div style="padding-top:60px;  margin-left: -20px;;min-width: 380px">
+    <div class="center">
+      <img alt="聚交园" class="img" src="https://qianye-space.oss-cn-hangzhou.aliyuncs.com/2a5012a1d1882ea766d4c7d74badb5f.png">
+    </div>
+    <div style="padding-top: 20px"/>
+    <van-row justify="center">
+      <h3>"有缘人 —— 找到你的最佳搭档"</h3>
+    </van-row>
+    <div style="margin: 14px;padding-top: 20px">
+      <van-cell-group inset>
+        <van-field
+            v-model="username"
+            :rules="[{ required: true, message: '请填写账号!' }]"
+            label="账号"
+            name="账号"
+            placeholder="账号"
+        />
+        <van-field
+            v-model="password"
+            :rules="[{ required: true, message: '请填写密码!' }]"
+            label="密码"
+            name="密码"
+            placeholder="密码"
+            type="password"
+        />
+        <div class="longin">
+          <van-button plain class="defaultLogin" @click="onSubmit" round type="primary">
+            <van-icon name="lock"/>
+            账号密码登录
+          </van-button>
+          <van-button @click="qqLogin" class="qqLogin" plain round type="primary">
+            <van-icon name="qq"/>
+            QQ 账号登录
+          </van-button>
+        </div>
+        <van-cell title="" to="/user/register" value="还没有账号？点击注册"></van-cell>
+      </van-cell-group>
+    </div>
+  </div>
+</template>
 
 <style scoped>
+@import "../assets/css/public.css";
 
+.longin {
+  margin: 16px 14px 0 12%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.defaultLogin {
+  flex: auto;
+  min-width: 140px;
+  margin-right: 10px;
+}
+
+.qqLogin {
+  flex: auto;
+  min-width: 140px;
+}
 </style>

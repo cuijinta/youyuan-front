@@ -27,7 +27,6 @@ import {useRoute, useRouter} from "vue-router";
 const title = ref('');
 const router = useRouter();
 const route = useRoute();
-
 watch(route, () => {
   if (route.meta.title) {
     console.log(route.meta.title)

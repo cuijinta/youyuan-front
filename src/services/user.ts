@@ -15,7 +15,7 @@
 //     return null;
 // }
 import myAxios from "../plugins/myAxios";
-import { setCurrentUseState } from "../states/user";
+import {setCurrentUseState} from "../states/user";
 
 export const getCurrentUser = async () => {
     // const currentUser = getCurrentUserState();

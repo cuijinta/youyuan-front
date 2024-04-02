@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import {showFailToast, showSuccessToast} from "vant";
+import {showFailToast} from "vant";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../api/user.ts";
 import {formatDateString} from "../plugins/DateFormat.ts";
@@ -32,12 +32,11 @@ onMounted(async () =>{
   //   showSuccessToast('获取用户信息成功');
   if(res) {
       user.value = res;
-    showSuccessToast('获取用户信息成功');
+    // showSuccessToast('获取用户信息成功');
 
     user.value.createTime = formatDateString(user.value.createTime, 'yyyy-MM-dd HH:mm:ss');
-  } else {
+  }   else {
     showFailToast('登录过期')
-    await router.push('/user/login');
   }
 })
 

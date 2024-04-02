@@ -82,7 +82,7 @@ watchEffect(() => {
 <style>
 
 :root {
-  --van-card-background: rgba(117, 107, 245, 0.92);
+  --van-card-background: rgba(224, 232, 246, 0.92);
   /*--van-card-thumb-radius: 1px;*/
 }
 </style>
