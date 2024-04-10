@@ -1,3 +1,4 @@
+import {genderMap, roleMap, userStatus} from "./userMap";
 /**
  * 用户类别
  */
@@ -6,13 +7,15 @@ export type UserType = {
     username: string;
     userAccount: string;
     avatarUrl?: string;
-    gender: number;
+    gender: genderMap;
     phone: string;
     createTime: Date;
-    userStatus: number;
+    userStatus: userStatus;
     email: string;
-    userRole: number;
-    tags: string;
+    userRole: roleMap;
+    tags: string[];
     code: string;
     profile: string;
+    teamIds: string[];
+    userIds: string[];
 }

@@ -1,7 +1,7 @@
 <template>
   <van-cell center title="最佳搭档">
     <template #right-icon>
-      <van-switch v-model="isMatchMode" size="24" inactive-color="rgba(61, 58, 64, 0.92)"/>
+      <van-switch v-model="isMatchMode" size="24" inactive-color="rgba(61, 58, 64, 0.92)" />
     </template>
   </van-cell>
   <user-card-list :user-list="userList" :loading="loading"/>
@@ -10,14 +10,16 @@
              image-size="200"
              description="数据为空~"
   />
+  <copyright></copyright>
 </template>
 
 <script setup lang="ts">
 import {ref, watchEffect} from 'vue';
 import myAxios from "../plugins/myAxios.ts";
-import {showFailToast} from "vant";
+import {showFailToast, showSuccessToast} from "vant";
 import UserCardList from "../components/UserCardList.vue";
 import {UserType} from "../models/user";
+import Copyright from "../components/Copyright.vue";
 
 const userList = ref([]);
 const isMatchMode = ref<boolean>(false);
@@ -29,8 +31,9 @@ const loading = ref(true);
 const loadData = async () => {
   let userListData;
   loading.value = true;
-  // 心动模式，根据标签匹配用户
+  // 精准匹配模式，根据标签匹配用户
   if (isMatchMode.value) {
+    showSuccessToast("精确匹配开启")
     const num = 10;
     userListData = await myAxios.get('/user/match', {
       params: {

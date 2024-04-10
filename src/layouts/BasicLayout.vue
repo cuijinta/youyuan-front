@@ -29,7 +29,7 @@ const router = useRouter();
 const route = useRoute();
 watch(route, () => {
   if (route.meta.title) {
-    console.log(route.meta.title)
+    // console.log(route.meta.title)
     title.value = route.meta.title;
   }
 }, { immediate: true }); // immediate: true 表示立即执行一次 watch 函数

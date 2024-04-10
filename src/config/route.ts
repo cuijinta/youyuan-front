@@ -13,6 +13,8 @@ import UserLoginPage from "../pages/UserLoginPage.vue";
 import TeamAddPage from "../pages/TeamAddPage.vue";
 import TeamUpdatePage from "../pages/TeamUpdatePage.vue";
 import UserRegister from "../pages/UserRegister.vue";
+import UserPageMore from "../pages/UserPageMore.vue";
+
 
 
 // const routes = [
@@ -40,10 +42,12 @@ const routes = [
     {path: '/user/list', meta: {title: '用户列表'}, component: SearchResultPage},
     {path: '/user/edit', meta: {title: '编辑信息'}, component: UserEditPage},
     {path: '/user/login', meta: {title: '登录'}, component: UserLoginPage},
-    {path: '/user/register',meta: {title: "注册",},component: UserRegister},
+    {path: '/user/register', meta: {title: "注册",}, component: UserRegister},
     {path: '/user/update', meta: {title: '更新信息'}, component: UserUpdatePage},
     {path: '/user/team/join', meta: {title: '我加入的队伍'}, component: UserTeamJoinPage},
     {path: '/user/team/create', meta: {title: '我创建的队伍'}, component: UserTeamCreatePage},
+    {path: '/user/more', meta: {title: '详细信息'}, component: UserPageMore},
+
 ]
 
 export default routes;
