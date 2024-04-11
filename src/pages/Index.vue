@@ -10,7 +10,6 @@
              image-size="200"
              description="数据为空~"
   />
-  <copyright></copyright>
 </template>
 
 <script setup lang="ts">
@@ -19,7 +18,6 @@ import myAxios from "../plugins/myAxios.ts";
 import {showFailToast, showSuccessToast} from "vant";
 import UserCardList from "../components/UserCardList.vue";
 import {UserType} from "../models/user";
-import Copyright from "../components/Copyright.vue";
 
 const userList = ref([]);
 const isMatchMode = ref<boolean>(false);

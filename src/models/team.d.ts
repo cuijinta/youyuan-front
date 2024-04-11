@@ -6,6 +6,7 @@ import {UserType} from "./user";
 export type TeamType = {
     id: number;
     username: string;
+    teamAvatarUrl?: string,
     name: string;
     description: string;
     expireTime: Date;
@@ -18,4 +19,7 @@ export type TeamType = {
     createUser?: UserType;
     hasJoinNum?: number;
     hasJoin?:boolean;
+    announce?: string;
+    user?:UserType;
+    UserSet?: UserType[]
 }

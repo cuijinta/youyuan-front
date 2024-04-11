@@ -4,21 +4,29 @@
   >
     <van-card
         v-for="team in props.teamList"
-        :thumb="ikun"
+        :thumb="team.teamAvatarUrl ? team.teamAvatarUrl : defaultTeamPicture"
         :desc="team.description"
         :title="`${team.name}`"
+        @click="showTeam(team.id)"
     >
       <template #tags>
         <van-tag plain type="danger" style="margin-right: 8px; margin-top: 8px">
-          {{
-            teamStatusEnum[team.status]
-          }}
+          {{teamStatusEnum[team.status]}}
+        </van-tag>
+        <van-tag plain style="color: #756bf5;margin-right: 8px; margin-top: 8px" type="primary">
+          队长：{{ team.user.username }}
         </van-tag>
       </template>
       <template #bottom>
         <div>
-          {{ `队伍人数: ${team.hasJoinNum}/${team.maxNum}` }}
-          <van-progress :percentage="(team.hasJoinNum/team.maxNum * 100).toFixed(1)" color="#f2826a" pivot-text="人员" />
+          <div>队伍人数:  {{ team.userSet.length}} / {{team.maxNum}} 人
+            <van-circle id="circle"
+              :current-rate="(team.hasJoinNum / team.maxNum * 100).toFixed(1)"
+              :stroke-width="200"
+              size="22px"
+          />
+          </div>
+          <van-progress :percentage="(team.hasJoinNum / team.maxNum * 100).toFixed(1)" color="#f2826a" pivot-text="" />
         </div>
         <div>
           {{ '过期时间 :  ' + format(team.expireTime, 'yyyy-MM-dd HH:mm:ss').toString() }}
@@ -28,6 +36,17 @@
         </div>
       </template>
       <template #footer>
+        <div
+            v-if="currentUser?.id===team.user?.id ||currentUser.userRole===1"
+            style="margin-left: 7px">
+        <span v-for="user of team.userSet.slice(0, 5)">
+          <img :alt="user.username" :src="user.avatarUrl ? user.avatarUrl : defaultPicture"
+               class="usersImgUrl">
+        </span>
+          <span v-if="team.userSet.length>5" class="omit">
+               ...
+          </span>
+        </div>
         <van-button size="small" type="primary" v-if="team.userId !== currentUser?.id && !team.hasJoin" plain
                     @click="preJoinTeam(team)">加入队伍
         </van-button>
@@ -54,13 +73,13 @@
 <script setup lang="ts">
 import {TeamType} from "../models/team";
 import {teamStatusEnum} from "../constants/team";
-import ikun from '../assets/ikun.png';
 import myAxios from "../plugins/myAxios";
 import {showFailToast, showSuccessToast} from "vant";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user";
 import {useRouter} from "vue-router";
 import {format} from "date-fns";
+import {defaultPicture, defaultTeamPicture} from "../common/userCommon.ts";
 
 interface TeamCardListProps {
   teamList: TeamType[];
@@ -161,9 +180,19 @@ const doDeleteTeam = async (id: number) => {
   }
 }
 
+const showTeam = (id: number) => {
+  router.push({
+    name: 'teamShow',
+    params: {
+      teamId: id
+    }
+  })
+}
+
 </script>
 
 <style scoped>
+@import "../assets/css/teamList.css";
 #teamCardList :deep(.van-image__img) {
   height: 128px;
   object-fit: unset;

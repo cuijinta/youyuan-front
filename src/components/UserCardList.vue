@@ -5,6 +5,7 @@
       :desc="user.profile"
       :title="user.username"
       :thumb="user.avatarUrl"
+      @click="showUser(user.id)"
   >
     <template #tags>
       <van-tag v-for="tag in user.tags" plain type="danger" style="margin-right: 8px; margin-top: 8px; color: #996ac7">
@@ -21,7 +22,9 @@
 
 <script setup lang="ts">
 import {UserType} from "../models/user";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 interface UserCardListProps {
   loading: boolean;
   userList: UserType[];
@@ -33,6 +36,14 @@ const props = withDefaults(defineProps<UserCardListProps>(), {
   userList: [] as UserType[],
 });
 
+const showUser = (id: number) => {
+  router.push({
+    name: 'userShow',
+    params: {
+      userId: id
+    }
+  })
+}
 </script>
 
 <style scoped>

@@ -172,7 +172,7 @@ const update = (val: string, name: string, field: string) => {
 }
 
 const loginOut = async () => {
-  const loginOut = await myAxios.post("/user/loginOut", {})
+  const loginOut = await myAxios.post("/user/logout", {})
   sessionStorage.clear()
   if (loginOut) {
     showSuccessToast("退出成功")

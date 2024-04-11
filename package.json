@@ -15,9 +15,11 @@
     "qs": "^6.11.2",
     "vant": "^4.8.7",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue3-emoji": "^2.1.8"
   },
   "devDependencies": {
+    "@types/qs": "^6.9.14",
     "@vitejs/plugin-vue": "^4.5.2",
     "typescript": "^5.2.2",
     "unplugin-vue-components": "^0.26.0",

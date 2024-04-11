@@ -5,6 +5,7 @@ import {useRoute, useRouter} from "vue-router";
 import {showFailToast, showSuccessToast} from "vant";
 import myAxios from "../plugins/myAxios";
 import currentUser from "../services/currentUser";
+import Copyright from "../components/Copyright.vue";
 
 const qqLogin = async () => {
   window.location.href = await myAxios.get("login/qq")
@@ -39,7 +40,7 @@ const onSubmit = async () => {
 <template>
   <div style="padding-top:60px;  margin-left: -20px;;min-width: 380px">
     <div class="center">
-      <img alt="聚交园" class="img" src="https://qianye-space.oss-cn-hangzhou.aliyuncs.com/2a5012a1d1882ea766d4c7d74badb5f.png">
+      <img alt="有缘人" class="img" src="https://qianye-space.oss-cn-hangzhou.aliyuncs.com/2a5012a1d1882ea766d4c7d74badb5f.png">
     </div>
     <div style="padding-top: 20px"/>
     <van-row justify="center">
@@ -76,6 +77,7 @@ const onSubmit = async () => {
       </van-cell-group>
     </div>
   </div>
+  <copyright/>
 </template>
 
 <style scoped>

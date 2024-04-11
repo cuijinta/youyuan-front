@@ -83,8 +83,8 @@
 }
 
 .self .text {
-    background-color: #0084ff;
-    color: #fff;
+    background-color: rgba(149, 236, 105);
+    color: rgb(0, 0, 0);
 }
 
 .input-text {

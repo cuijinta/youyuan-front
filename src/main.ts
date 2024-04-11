@@ -3,10 +3,11 @@ import App from './App.vue';
 import 'vant/lib/index.css';
 import 'vant/es/toast/style';
 import {
-    CellGroup,
+    Badge,
+    CellGroup, Circle,
     Col,
-    Field,
-    Icon,
+    Field, FloatingBubble,
+    Icon, Loading,
     NavBar, Picker,
     Popup,
     PullRefresh,
@@ -36,6 +37,10 @@ app.use(Popup);
 app.use(Picker);
 app.use(Toast);
 app.use(Switch);
+app.use(Badge);
+app.use(Loading);
+app.use(FloatingBubble);
+app.use(Circle);
 // app.use(DatetimePicker);
 
 //创建路由实例并传递 `routes` 配置
