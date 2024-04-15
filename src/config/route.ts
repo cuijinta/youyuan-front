@@ -4,7 +4,6 @@ import Index from "../pages/Index.vue";
 import Team from "../pages/TeamPage.vue";
 import UserPage from "../pages/UserPage.vue";
 import UserUpdatePage from "../pages/UserUpdatePage.vue";
-import UserTeamJoinPage from "../pages/UserTeamJoinPage.vue";
 import UserTeamCreatePage from "../pages/UserTeamCreatePage.vue";
 import SearchPage from "../pages/SearchPage.vue";
 import SearchResultPage from "../pages/SearchResultPage.vue";

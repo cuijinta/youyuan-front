@@ -182,8 +182,8 @@ const doDeleteTeam = async (id: number) => {
 
 const showTeam = (id: number) => {
   router.push({
-    name: 'teamShow',
-    params: {
+    path: '/team/show',
+    query: {
       teamId: id
     }
   })

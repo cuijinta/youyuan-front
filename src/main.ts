@@ -41,6 +41,7 @@ app.use(Badge);
 app.use(Loading);
 app.use(FloatingBubble);
 app.use(Circle);
+app.use(Icon);
 // app.use(DatetimePicker);
 
 //创建路由实例并传递 `routes` 配置

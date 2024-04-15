@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 
 import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
@@ -8,7 +8,8 @@ import currentUser from "../services/currentUser";
 import Copyright from "../components/Copyright.vue";
 
 const qqLogin = async () => {
-  window.location.href = await myAxios.get("login/qq")
+  // window.location.href = await myAxios.get("login/qq")
+  showSuccessToast("qq开发平台应用审核中，敬请期待");
 }
 const router = useRouter()
 const route = useRoute()

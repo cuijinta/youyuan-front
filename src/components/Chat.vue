@@ -21,7 +21,7 @@
           :recent="true"
           @click-emoji="appendText"
           :options-name="optionsName"
-          size="big"
+          size="small"
       />
       <textarea placeholder="聊点什么吧...." v-model="stats.text" @keyup.enter="send" class="input-text"></textarea>
       <button class="input-send-button" @click="send">
@@ -41,7 +41,7 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import {nextTick, onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {showFailToast} from "vant";
@@ -122,6 +122,7 @@ const chatRoom = ref(null)
 
 onMounted(async () => {
   let {id, username, userType, teamId, teamName, teamType} = route.query
+  console.log('query', route.query)
   stats.value.chatUser.id = Number.parseInt(id)
   stats.value.team.teamId = Number.parseInt(teamId)
   stats.value.chatUser.username = username
@@ -161,6 +162,7 @@ onMounted(async () => {
       }
     })
   }
+  //群聊
   if (stats.value.chatType === stats.value.chatEnum.TEAM_CHAT) {
     const res = await request.post("/chat/teamChat",
         {
@@ -183,6 +185,7 @@ onMounted(async () => {
 })
 
 const init = () => {
+  console.log('到这了', stats.value)
   let uid = stats.value.user?.id;
   if (typeof (WebSocket) == "undefined") {
     showFailToast("您的浏览器不支持WebSocket")
@@ -190,8 +193,9 @@ const init = () => {
     // 区分线上和开发环境
     // let socketUrl = process.env.NODE_ENV !== "development" ? `wss://qianye.icu/api/websocket/${uid}/${stats.value.team.teamId}`
     //     : `ws://192.168.1.178:8080/api/websocket/${uid}/${stats.value.team.teamId}`
-    let socketUrl = process.env.NODE_ENV !== "development" ? `wss://qianye.icu/api/websocket/${uid}/${stats.value.team.teamId}`
-        : `ws://localhost:8080/api/websocket/${uid}/${stats.value.team.teamId}`
+    // let socketUrl = process.env.NODE_ENV !== "development" ? `wss://qianye.icu/api/websocket/${uid}/${stats.value.team.teamId}`
+    //     : `ws://192.168.1.178:8080/api/websocket/${uid}/${stats.value.team.teamId}`
+    let socketUrl = `47.97.179.125:8888/api/websocket/${uid}/${stats.value.team.teamId}`  //线上地址
     if (socket != null) {
       socket.close();
       socket = null;
@@ -210,6 +214,7 @@ const init = () => {
       }
       // 对收到的json数据进行解析，
       let data = JSON.parse(msg.data)
+      console.log('data',data)
       if (data.error) {
         showFailToast(data.error)
         return
@@ -232,7 +237,7 @@ const init = () => {
           flag = (data.formUser?.id !== uid)
         }
         // 队伍
-        if (stats.value.chatType === data.chatType && data.teamId && stats.value.team.teamId === data.teamId) {
+        if (stats.value.chatType === data.chatType && data.teamId && stats.value.teamId === data.teamId) {
           flag = (data.formUser?.id !== uid)
         }
         if (flag) {
@@ -268,6 +273,7 @@ const send = () => {
     showFailToast("不能给自己发信息")
     return;
   }
+  console.log('stats.value',stats.value)
   if (!stats.value.text.trim()) {
     showFailToast("请输入内容")
   } else {
@@ -284,7 +290,10 @@ const send = () => {
       }
       socket.send(JSON.stringify(message));
       stats.value.messages.push({user: stats.value.user.id, text: stats.value.text})
+      console.log('马上创建content', stats.value.user + "|||" + stats.value.text);
+      console.log('content1:', stats.value.content);
       createContent(null, stats.value.user, stats.value.text)
+      console.log('content2:', stats.value.content);
       stats.value.text = '';
       nextTick(() => {
         const lastElement = chatRoom.value.lastElementChild

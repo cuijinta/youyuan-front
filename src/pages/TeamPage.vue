@@ -1,4 +1,5 @@
 <template>
+  <div style="margin-bottom: 16px"/>
   <van-search v-model="searchText" placeholder="搜索队伍" @search="onSearch" />
   <van-tabs v-model:active="active" @change="onTabChange">
     <van-tab icon="fire-o" title="公开" name="public" />
@@ -16,6 +17,7 @@
 <!--  />-->
   <van-floating-bubble v-model:offset="offset" axis="xy" icon="plus" @click="toAddTeam"  />
   <van-empty v-if="!teamList || teamList.length < 1"/>
+
 </template>
 
 <script setup lang="ts">

@@ -8,7 +8,7 @@
   </van-sticky>
 
   <div class="center">
-    <img :alt="team.name" class="img" :src="team.teamAvatarUrl?team.teamAvatarUrl:defaultPicture">
+    <img :alt="team.name" class="img" :src="team.teamAvatarUrl?team.teamAvatarUrl:defaultTeamPicture">
   </div>
   <van-divider>{{ team.name }}</van-divider>
   <van-cell :value="team.name" center icon="award-o">
@@ -51,8 +51,8 @@
     <div v-for="user in userSet" id="card" class="card">
       <van-swipe-cell>
         <van-card
-            :desc="user.userDesc ?'简介：'+ user.userDesc:'简介：该用户比较懒,暂时没有设置'"
-            :thumb="user.userAvatarUrl ? user.userAvatarUrl :defaultPicture "
+            :desc="user.profile ?'简介：'+ user.profile:'简介：该用户比较懒,暂时没有设置'"
+            :thumb="user.avatarUrl ? user.avatarUrl :defaultPicture "
             :title="user.username"
             @click="showUser(user.id)"
         >
@@ -70,7 +70,7 @@
                       @click="addUser"/>
           <!--当前用户是管理员或者是队伍的创建者-->
           <span v-if="loginUser.userRole===1||team.user.id ===loginUser.id">
-          <span v-if="user.userRole!==1&&user.id!==loginUser.id">
+          <span v-if="user.userRole!==1 && user.id!==loginUser.id">
               <van-button square text="踢出队伍"
                           class="delete-button child" type="danger" @click="kickOut(user.username,user.id)"/>
             </span>
@@ -87,11 +87,10 @@ import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import getCurrent from "../services/currentUser.js";
 import request from "../plugins/myAxios";
-import {defaultPicture, jsonParseTag} from "../common/userCommon";
+import {defaultPicture, defaultTeamPicture, jsonParseTag} from "../common/userCommon";
 import {showConfirmDialog, showSuccessToast} from "vant";
 import {UserType} from "../models/user";
 import {TeamType} from "../models/team";
-
 const loginUser = ref({})
 const router = useRouter()
 const team = ref<TeamType[]>({})
@@ -101,14 +100,18 @@ const route = useRoute()
 const teamId = route.query.teamId
 
 onMounted(async () => {
-  await getCurrent()
-  const users: any[] = await request.get(`/team/${teamId}`)
-  if (users) {
-    team.value = users
-    user.value = users.user
-    userSet.value = users.userSet
+  console.log(teamId);
+  console.log(route.query);
+  const userRes = await getCurrent();
+  // loginUser.value = userRes.data
+  const res = await request.get(`/team/${teamId}`);
+  const resTeam = res.data;
+  if (resTeam) {
+    team.value = resTeam
+    user.value = resTeam.user
+    userSet.value = resTeam.userSet
   }
-  jsonParseTag(users.userSet)
+  jsonParseTag(resTeam.userSet)
   loginUser.value = sessionStorage.getItem("longUser") ? JSON.parse(sessionStorage.getItem("longUser")) : undefined
 })
 
@@ -117,7 +120,7 @@ const toChat = () => {
     path: "/chat",
     query: {
       teamId: team.value.id,
-      name: team.value.name,
+      teamName: team.value.name,
       teamType: 2
     }
   })

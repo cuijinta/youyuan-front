@@ -4,7 +4,7 @@ import {UserType} from "../models/user";
 export const getCurrent = async () => {
     const getCurrentUser: UserType = await myAxios.get("/user/current")
     // @ts-ignore
-    sessionStorage.setItem("longUser", getCurrentUser ? JSON.stringify(getCurrentUser) : JSON.stringify({}))
+    sessionStorage.setItem("longUser", getCurrentUser ? JSON.stringify(getCurrentUser.data) : JSON.stringify({}))
     return getCurrentUser
 }
 
